@@ -30,8 +30,8 @@ def calc_eval(exp):
         return OPERATORS[exp]
     elif isinstance(exp, int) or isinstance(exp, bool):  # Numbers and booleans
         return exp
-    elif _________________:  # CHANGE THIS CONDITION FOR Q4
-        return _________________  # UPDATE THIS FOR Q4
+    elif exp in bindings:  # CHANGE THIS CONDITION FOR Q4
+        return bindings[exp]# UPDATE THIS FOR Q4
 
 
 def calc_apply(op, args):
@@ -52,7 +52,7 @@ def floor_div(args):
     2
     >>> calc_eval(Pair("//", Pair(4, Pair(2, nil))))
     2
-    >>> calc_eval(Pair("//", Pair(100, Pair(2, Pair(2, Pair(2, Pair(2, Pair(2, nil)≤)))))))
+    >>> calc_eval(Pair("//", Pair(100, Pair(2, Pair(2, Pair(2, Pair(2, Pair(2, nil))))))))
     3
     >>> calc_eval(Pair("//", Pair(100, Pair(Pair("+", Pair(2, Pair(3, nil))), nil))))
     20
@@ -89,6 +89,13 @@ def eval_and(expressions):
     True
     """
     "*** YOUR CODE HERE ***"
+    cur, val = expressions, True
+    while cur != nil:
+        val = calc_eval(cur.first)
+        if val is scheme_f:
+            return scheme_f
+        cur = cur.rest
+    return val
 
 
 bindings = {}
@@ -110,6 +117,9 @@ def eval_define(expressions):
     2
     """
     "*** YOUR CODE HERE ***"
+    idx , val = expressions.first , calc_eval(expressions.rest.first)
+    bindings[idx] = val
+    return idx
 
 
 OPERATORS = {
